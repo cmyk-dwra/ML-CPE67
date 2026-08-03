@@ -1,5 +1,5 @@
 # ML-CPE67
-For Machine Learning class third year (Artificial intelligence slop) mai chob AI hate hate #hatered #die #anger #fuck
+For Machine Learning class third year (Artificial intelligence slop) mai chob AI hate hate #hatered #die #anger #fume #drool
 <table>
   <tr>
     <td valign="top">
