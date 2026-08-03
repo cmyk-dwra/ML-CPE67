@@ -2,8 +2,8 @@ import pandas as pd
 import seaborn as sns
 import matplotlib.pyplot as plt
 
-Path = "C:/Users/Ansel/Desktop/Ansel/Python/ML-CPE67/Lab01/"
-df = pd.read_csv(f"{Path}CowMilkMastitisDataset.csv")
+#Path = "C:/Users/Ansel/Desktop/Ansel/Python/ML-CPE67/Lab01/"
+df = pd.read_csv(f"C:/Users/SW02/Downloads/CowMilkMastitisDataset.csv")
 
 #Dataset Cleaning
 df = df.drop_duplicates()

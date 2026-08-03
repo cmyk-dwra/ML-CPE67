@@ -1,0 +1,1 @@
+KNN stands for (K Nearest Neighbour (no idea what K is))
