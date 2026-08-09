@@ -17,8 +17,11 @@ scaler = StandardScaler()
 X_train = scaler.fit_transform(X_train)
 X_test = scaler.transform(X_test) #Scaling and unifying the feature data
 
+print("Training:", len(X_train))
+print("Testing:", len(X_test))
+
 #----------KNN Model Training and Prediction-------------
-k_values = [3,5,7,9,11]
+k_values = [k for k in range(1, 22, 2)]
 for k in k_values:
     knn = KNeighborsRegressor(n_neighbors=k)
     knn.fit(X_train, Y_train) #Training the KNN model
