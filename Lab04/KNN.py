@@ -3,8 +3,8 @@ import seaborn as sns
 import matplotlib.pyplot as plt
 from sklearn.model_selection import train_test_split
 
-#Path = "C:/Users/Ansel/Desktop/Ansel/Python/ML-CPE67/Lab01/"
-df = pd.read_csv(f"C:/Users/SW02/Downloads/CowMilkMastitisDataset.csv")
+Path = "C:/Users/Ansel/Desktop/Ansel/Python/ML-CPE67"
+df = pd.read_csv(f"{Path}/Lab02/CowMilkMastitisDataset.csv")
 
 #Dataset Exploration
 Summary = df.describe()
@@ -21,4 +21,4 @@ print("Data", "-"*100, "\n", df.to_string(), "\n", "-"*120)
 #Classification
 X = df.drop(columns=["class1"])
 Y = df["class1"]
-X_train, X_test
+X_train, X_test, Y_train, Y_test = train_test_split(X, Y, test_size=0.2, random_state=42)
