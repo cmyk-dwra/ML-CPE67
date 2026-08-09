@@ -27,7 +27,6 @@ print("Training:", len(X_train))
 print("Testing:", len(X_test))
 accuracy = 1 - np.abs(Y_pred - Y_test) / np.abs(Y_test)
 
-for actual, predicted in zip(Y_test, Y_pred):
-    accuracy = 1 - abs(predicted - actual) / abs(actual)
-    print(f"Actual: {actual}, Predicted: {predicted:.2f}, Accuracy: {accuracy * 100:.2f}%")
-print("Mean Accuracy:", accuracy.mean() * 100, "%")
+for actual, predicted, acc in zip(Y_test, Y_pred, accuracy):
+    print(f"Actual: {actual}, Predicted: {predicted:.2f}, Accuracy: {acc * 100:.2f}%")
+print(f"Accuracy: {accuracy.mean() * 100:.2f}%")
