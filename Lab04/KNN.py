@@ -5,7 +5,7 @@ from sklearn.preprocessing import StandardScaler
 from sklearn.neighbors import KNeighborsRegressor
 
 Path = "C:/Users/Ansel/Desktop/Ansel/Python/ML-CPE67"
-df = pd.read_csv(f"{Path}/Lab04/CowMilkMastitisDataset.csv")
+df = pd.read_csv(f"{Path}/cow_milk_mastitis_dataset.csv")
 
 #-----------Data Preparation for KNN-------------
 X = df.drop(columns=["Cow_ID", "Day", "Milk_Yield"]) #Prediction features
