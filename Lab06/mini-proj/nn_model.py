@@ -6,30 +6,32 @@ from tensorflow.keras import layers
 
 
 def build_model(input_shape, num_classes):
-    """Fully-connected neural network (MLP)."""
+    """Convolutional Neural Network (CNN) for Image Classification."""
 
     model = keras.Sequential([
         keras.Input(shape=input_shape),
-
-        # Normalize 0-255 to 0-1 inside the model, so inference code never
-        # has to remember to do it
+        
+        # 1. Standardize pixel values
         layers.Rescaling(1.0 / 255),
 
-        # An MLP takes a flat vector, so the 2D image is unrolled here
+        # 2. Extract spatial features using Convolutions
+        layers.Conv2D(32, (3, 3), activation="relu"),
+        layers.MaxPooling2D((2, 2)),
+        
+        layers.Conv2D(64, (3, 3), activation="relu"),
+        layers.MaxPooling2D((2, 2)),
+        
+        layers.Conv2D(128, (3, 3), activation="relu"),
+        layers.MaxPooling2D((2, 2)),
+
+        # 3. Flatten the compressed feature maps, not the raw image
         layers.Flatten(),
 
-        layers.Dense(256, activation="relu"),
-        layers.BatchNormalization(),
-        layers.Dropout(0.4),
-
+        # 4. Dense classification layers
         layers.Dense(128, activation="relu"),
-        layers.BatchNormalization(),
-        layers.Dropout(0.4),
+        layers.Dropout(0.5),
 
-        layers.Dense(64, activation="relu"),
-        layers.Dropout(0.3),
-
-        # 1 sigmoid output for 2 classes, softmax otherwise
+        # Output Layer
         layers.Dense(
             1 if num_classes == 2 else num_classes,
             activation="sigmoid" if num_classes == 2 else "softmax"
@@ -38,7 +40,7 @@ def build_model(input_shape, num_classes):
 
     model.compile(
         optimizer=keras.optimizers.Adam(1e-3),
-        loss="binary_crossentropy" if num_classes == 2
+        loss="binary_crossentropy" if num_classes == 2 
              else "sparse_categorical_crossentropy",
         metrics=["accuracy"],
     )

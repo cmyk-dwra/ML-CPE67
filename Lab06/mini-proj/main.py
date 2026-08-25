@@ -8,6 +8,7 @@ from preprocessing import to_features
 from split_data import split_dataset
 from nn_model import train_model, predict_model
 from evaluate import evaluate_model, plot_history
+from test_nn import test_nn
 
 # Paths are relative to this file, so the script runs from any directory
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
@@ -15,7 +16,7 @@ DATA_PATH = os.path.join(BASE_DIR, "..", "..", "train")
 OUTPUT_DIR = os.path.join(BASE_DIR, "outputs")
 raw_path = os.path.normpath(DATA_PATH)
 
-IMG_SIZE = 400
+IMG_SIZE = 100
 TEST_SIZE = 0.2
 VAL_SIZE = 0.1
 MAX_PER_CLASS = 3000   # None = use all images
@@ -91,6 +92,7 @@ def main():
     evaluate_model(y_test, predictions, classes,
                    save_path=f"{OUTPUT_DIR}/confusion_matrix.png")
     plot_history(history, f"{OUTPUT_DIR}/training_history.png")
+    test_nn()
 
 
 if __name__ == "__main__":
