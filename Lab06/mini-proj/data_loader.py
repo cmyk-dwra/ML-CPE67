@@ -7,7 +7,7 @@ from preprocessing import preprocess_image
 VALID_EXT = (".jpg", ".jpeg", ".png", ".bmp")
 
 
-def load_data(data_path, img_size=100, max_per_class=None):
+def load_data(data_path, img_size=400, max_per_class=None):
 
     images = []
     labels = []

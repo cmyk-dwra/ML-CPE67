@@ -11,11 +11,11 @@ from evaluate import evaluate_model, plot_history
 
 # Paths are relative to this file, so the script runs from any directory
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-DATA_PATH = os.path.join(BASE_DIR, "..", "..", "Cheetah or Hyena")
+DATA_PATH = os.path.join(BASE_DIR, "..", "..", "train")
 OUTPUT_DIR = os.path.join(BASE_DIR, "outputs")
 raw_path = os.path.normpath(DATA_PATH)
 
-IMG_SIZE = 100
+IMG_SIZE = 400
 TEST_SIZE = 0.2
 VAL_SIZE = 0.1
 MAX_PER_CLASS = 3000   # None = use all images
