@@ -1,0 +1,307 @@
+# Cow Milk Mastitis Dataset - Milk Yield Regression
+
+## Overview
+
+This project applies a machine learning regression workflow to the **Cow Milk Mastitis Dataset**. The objective is to predict **Milk Yield** using milk-related measurements collected from cows.
+
+The regression workflow consists of:
+
+1. Loading the dataset
+2. Preparing the features and target
+3. Splitting the dataset into training and testing sets
+4. Standardizing the features
+5. Applying Principal Component Analysis (PCA)
+6. Training a Ridge Regression model
+7. Predicting milk yield
+8. Evaluating model performance
+9. Visualizing regression results
+
+---
+
+## Dataset
+
+[DOWNLOAD DATASET HERE](https://www.kaggle.com/datasets/amithadityacp/cow-mastitisfrom-milk)
+
+### Relevant Features
+
+| Feature | Description |
+|---|---|
+| `Milk_Temperature` | Temperature of the milk |
+| `Milk_pH` | pH level of the milk |
+| `Milk_Conductivity` | Electrical conductivity of the milk |
+| `Somatic_Cell_Count` | Number of somatic cells in the milk |
+| `Clotting` | Clotting measurement |
+| `Milk_Yield` | Milk production/yield used as the regression target |
+
+---
+
+## Regression Objective
+
+The objective of the regression model is to predict:
+
+```text
+Milk_Yield
+```
+
+using the available milk measurements as input features.
+
+The feature matrix is prepared using:
+
+```python
+X = prepare_features(df)
+Y = df["Milk_Yield"]
+```
+
+`X` contains the predictor variables, while `Y` contains the actual milk yield.
+
+The model therefore attempts to learn the relationship between milk characteristics and milk yield.
+
+---
+
+## Machine Learning Workflow
+
+### 1. Data Loading
+
+The dataset is loaded using the project's data loader:
+
+```python
+df = load_data()
+```
+
+---
+
+### 2. Feature Preparation
+
+The input features are separated from the target variable.
+
+```python
+X = prepare_features(df)
+Y = df["Milk_Yield"]
+```
+
+`X` contains the predictor variables, while `Y` contains the actual milk yield.
+
+---
+
+### 3. Train / Test Split
+
+The dataset is divided into training and testing data.
+
+```python
+X_train, X_test, Y_train, Y_test = train_test_split(
+    X,
+    Y,
+    test_size=0.2,
+    random_state=42
+)
+```
+
+80% of the data is used for training and 20% is used for testing.
+
+---
+
+### 4. Feature Scaling
+
+`StandardScaler` is used to standardize the input features.
+
+```python
+scaler = StandardScaler()
+
+X_train_scaled = scaler.fit_transform(X_train)
+X_test_scaled = scaler.transform(X_test)
+```
+
+This places the features on comparable scales before PCA is performed.
+
+---
+
+### 5. Principal Component Analysis (PCA)
+
+PCA is applied to reduce the feature space to two principal components.
+
+```python
+pca = PCA(n_components=2)
+
+X_train_pca = pca.fit_transform(X_train_scaled)
+X_test_pca = pca.transform(X_test_scaled)
+```
+
+The explained variance of each component is also displayed to show how much of the original feature variation is retained.
+
+---
+
+### 6. Ridge Regression
+
+Ridge Regression is used to predict milk yield.
+
+```python
+model = Ridge(alpha=1.0)
+
+model.fit(X_train_pca, Y_train)
+
+Y_pred = model.predict(X_test_pca)
+```
+
+Ridge Regression is a linear regression model that includes regularization to reduce the effect of excessively large model coefficients.
+
+---
+
+## Model Evaluation
+
+The regression model is evaluated using the following metrics.
+
+### Mean Absolute Error (MAE)
+
+Mean Absolute Error measures the average absolute difference between actual and predicted milk yield.
+
+```text
+Lower MAE = Better
+```
+
+### Mean Squared Error (MSE)
+
+Mean Squared Error measures the average squared prediction error.
+
+```text
+Lower MSE = Better
+```
+
+### Root Mean Squared Error (RMSE)
+
+Root Mean Squared Error is the square root of MSE. It is expressed in the same units as the target variable, making it easier to interpret than MSE.
+
+```text
+Lower RMSE = Better
+```
+
+### R² Score
+
+R² Score measures how well the model explains the variation in milk yield.
+
+```text
+Higher R² = Better
+```
+
+The metrics are calculated using:
+
+```python
+mae = mean_absolute_error(Y_test, Y_pred)
+
+mse = mean_squared_error(Y_test, Y_pred)
+
+rmse = np.sqrt(mse)
+
+r2 = r2_score(Y_test, Y_pred)
+```
+
+---
+
+## Regression Visualizations
+
+The project produces four visualizations to analyze the regression model.
+
+### 1. Actual vs Predicted Milk Yield
+
+This graph compares the actual milk yield against the values predicted by the Ridge Regression model.
+
+Predictions closer to the diagonal reference line indicate better agreement between the actual and predicted values.
+
+---
+
+### 2. Residual Plot
+
+The residual plot shows the difference between the actual and predicted milk yield.
+
+Residuals distributed randomly around zero indicate that the model does not show an obvious systematic prediction error.
+
+---
+
+### 3. PCA Feature Space
+
+The PCA visualization displays the test samples using the two principal components generated by PCA.
+
+The points are colored according to milk yield to show how milk yield is distributed across the reduced feature space.
+
+---
+
+### 4. Prediction Error Distribution
+
+This graph displays the distribution of prediction errors.
+
+It helps determine whether the prediction errors are generally centered around zero or whether the model tends to systematically overpredict or underpredict milk yield.
+
+---
+
+## Libraries Used
+
+The project uses the following Python libraries:
+
+- NumPy
+- Pandas
+- Matplotlib
+- Seaborn
+- Scikit-learn
+
+### Main Scikit-learn Components
+
+```text
+train_test_split
+StandardScaler
+PCA
+Ridge
+mean_absolute_error
+mean_squared_error
+r2_score
+```
+
+---
+
+## Project Structure
+
+```text
+cow_milk_mastitis/
+│
+├── data_loader.py
+├── preprocessing.py
+├── regression.py
+├── classification.py
+├── cow_milk_mastitis_dataset.csv
+│
+└── outputs/
+```
+
+---
+
+## Output
+
+The regression program displays:
+
+- PCA explained variance
+- Individual actual and predicted milk yields
+- Prediction errors
+- Mean Absolute Error (MAE)
+- Mean Squared Error (MSE)
+- Root Mean Squared Error (RMSE)
+- R² Score
+- Actual vs Predicted Milk Yield visualization
+- Residual Plot
+- PCA Feature Space visualization
+- Prediction Error Distribution
+
+---
+
+## Conclusion
+
+This project demonstrates a complete regression workflow for predicting milk yield from milk-related measurements.
+
+The workflow combines **feature scaling**, **PCA dimensionality reduction**, and **Ridge Regression**, followed by numerical evaluation and graphical analysis of the predictions.
+
+The numerical metrics provide quantitative information about model performance, while the visualizations provide additional insight into prediction accuracy, residual behavior, feature distribution, and prediction errors.
+
+---
+
+## Note on the Preprocessing Workflow
+
+The dataset is already well-structured and does not contain the types of obvious data-quality problems that would require extensive cleaning. Therefore, preprocessing focuses primarily on **feature preparation, scaling, and dimensionality reduction** rather than artificially modifying valid observations.
+
+This preserves the original dataset while still demonstrating the complete machine-learning workflow required for the project.
