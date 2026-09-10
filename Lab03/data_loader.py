@@ -1,10 +1,13 @@
+import os
 import pandas as pd
 
-Path = "C:/Users/Ansel/Desktop/Ansel/Python/ML-CPE67"
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+DATA_PATH = os.path.join(BASE_DIR, "..", "cow_milk_mastitis_dataset.csv")
+OUTPUT_DIR = os.path.join(BASE_DIR, "outputs")
+raw_path = os.path.normpath(DATA_PATH)
 
 def load_data():
-    df = pd.read_csv(
-        f"{Path}/cow_milk_mastitis_dataset.csv"
+    df = pd.read_csv(f"{DATA_PATH}")
     )
     return df
 
