@@ -15,7 +15,7 @@ The implementation is organized into separate Python modules so that data loadin
 
 ## Dataset Structure
 
-[DOWNLOAD DATASET FROM](https://www.kaggle.com/datasets/singhdatascientist/for-image-classification-of-cheetah-vs-hyena)
+[DOWNLOAD DATASET HERE](https://www.kaggle.com/datasets/singhdatascientist/for-image-classification-of-cheetah-vs-hyena)
 
 ```text
 train/
