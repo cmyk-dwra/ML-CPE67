@@ -120,8 +120,8 @@ Regression analysis for Milk_Yield
 Classification using class1
 Feature scaling and dimensionality reduction
 Machine learning model training and evaluation
+## Project Structure
 ```
-Project Structure
 cow_milk_mastitis
 │
 ├── data_loader.py
