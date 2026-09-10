@@ -8,7 +8,6 @@ raw_path = os.path.normpath(DATA_PATH)
 
 def load_data():
     df = pd.read_csv(f"{DATA_PATH}")
-    )
     return df
 
 def prepare_features(df):
