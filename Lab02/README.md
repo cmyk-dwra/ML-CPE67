@@ -21,7 +21,7 @@ The dataset contains the following attributes:
 | `Somatic_Cell_Count` | Somatic cell count measurement |
 | `Milk_Yield` | Milk production/yield |
 | `Clotting` | Clotting indicator |
-| `class1` | Binary representation of the presence of milk mastitis |
+| `class1` | Milk mastitis indicator |
 
 ## Data Preprocessing
 
