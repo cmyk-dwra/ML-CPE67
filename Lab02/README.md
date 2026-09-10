@@ -121,7 +121,7 @@ Classification using class1
 Feature scaling and dimensionality reduction
 Machine learning model training and evaluation
 Project Structure
-cow_milk_mastitis/
+cow_milk_mastitis
 │
 ├── data_loader.py
 ├── preprocessing.py
@@ -130,7 +130,6 @@ cow_milk_mastitis/
 ├── cow_milk_mastitis_dataset.csv
 │
 └── outputs/
-Conclusion
 
 ## Note on Preprocessing Operations
 The preprocessing workflow includes checks and handling procedures for missing values, duplicate records, and potentially incorrect numerical values, as required by the specified preprocessing workflow.
