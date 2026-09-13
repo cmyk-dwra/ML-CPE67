@@ -9,6 +9,7 @@ from preprocess import to_features
 from split_data import split_dataset
 from svm_model import train_svm, predict_svm
 from evaluate import evaluate_model
+from test_svm import test_svm
 
 DATA_PATH = "train"
 OUTPUT_DIR = "outputs"
@@ -76,6 +77,8 @@ def main():
     print("\n[Step 6] Evaluating model...")
     evaluate_model(y_test, predictions, classes,
                    save_path=f"{OUTPUT_DIR}/confusion_matrix.png")
+
+    test_svm()
 
 
 if __name__ == "__main__":
