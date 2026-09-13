@@ -1,6 +1,3 @@
-
-
-
 import matplotlib
 
 # Set backend before pyplot, so it works without a display
@@ -13,7 +10,6 @@ from sklearn.metrics import (
     classification_report,
     confusion_matrix
 )
-
 
 def evaluate_model(y_test, predictions, classes, save_path=None):
 

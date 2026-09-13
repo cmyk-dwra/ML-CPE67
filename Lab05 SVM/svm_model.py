@@ -18,7 +18,7 @@ def train_svm(X_train, y_train, pca_components=150):
 
     # Create SVM model
     model = SVC(
-        kernel="rbf", C=10, gamma="scale", cache_size=1000
+        kernel="sigmoid", C=5, gamma="scale", cache_size=1000, coef0=0.0
     )
 
     # Train model
