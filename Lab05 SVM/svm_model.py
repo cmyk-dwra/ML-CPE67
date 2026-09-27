@@ -7,9 +7,8 @@ from sklearn.svm import SVC
 def train_svm(X_train, y_train, pca_components=150):
     # Scaler + PCA in one pipeline so test data always gets the same
     # transform. PCA also makes RBF SVM tractable on 10,000 pixel features.
-    scaler = Pipeline([
-        ("scaler", StandardScaler()),
-        ("pca", PCA(n_components=min(pca_components, *X_train.shape),
+    scaler = Pipeline([("scaler", StandardScaler()),
+("pca", PCA(n_components=min(pca_components, *X_train.shape),
                     whiten=True, random_state=42)),
     ])
 
