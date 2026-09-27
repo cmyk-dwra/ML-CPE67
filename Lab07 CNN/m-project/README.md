@@ -2,23 +2,41 @@
 
 CNN image classifier for recognizing **Cheetahs vs Hyenas** using TensorFlow/Keras.
 
+## Dataset Structure
+
+[DOWNLOAD DATASET HERE](https://www.kaggle.com/datasets/singhdatascientist/for-image-classification-of-cheetah-vs-hyena)
+
+```text
+train/
+├── cheetah/
+│   ├── image001.jpg
+│   ├── image002.jpg
+│   └── ...
+│
+└── hyena/
+    ├── image001.jpg
+    ├── image002.jpg
+    └── ...
+```
+
 ## Structure
 
-`m-project/
-    ├── train/
-    │   ├── cheetah/
-    │   └── hyena/
-    ├── validation/
-    │   ├── cheetah/
-    │   └── hyena/
-    ├── main.py
-    ├── cnn_model.py
-    ├── data_loader.py
-    ├── preprocessing.py
-    ├── split_data.py
-    ├── evaluate.py
-    └── test_cnn.py
-`
+```text
+m-project/
+├── train/
+│   ├── cheetah/
+│   └── hyena/
+├── validation/
+│   ├── cheetah/
+│   └── hyena/
+├── main.py
+├── cnn_model.py
+├── data_loader.py
+├── preprocessing.py
+├── split_data.py
+├── evaluate.py
+└── test_cnn.py
+```
 ## Model
 
 - 3 convolutional blocks: `32 → 64 → 128` filters
