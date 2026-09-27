@@ -4,6 +4,7 @@ import matplotlib
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 import numpy as np
+import cv2
 
 OUTPUT_DIR = "outputs"
 IMG_SIZE = 100
@@ -62,9 +63,10 @@ def test_svm(n_samples=4):
         color = "green" if correct else "red"
 
         # X_test is flattened, so reshape it back into 100x100
-        image = X_sample[i].reshape(100, 100)
+        image = X_sample[i].reshape(100, 100, 3)
+        image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
 
-        ax.imshow(image, cmap="gray")
+        ax.imshow(image)
 
         ax.set_xticks([])
         ax.set_yticks([])
