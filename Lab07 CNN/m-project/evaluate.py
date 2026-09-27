@@ -11,7 +11,6 @@ from sklearn.metrics import (
     confusion_matrix
 )
 
-
 def evaluate_model(y_test, predictions, classes, save_path=None):
 
     # Pin label order so target_names always matches the columns

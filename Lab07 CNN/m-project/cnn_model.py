@@ -18,26 +18,27 @@ def build_model(input_shape, num_classes):
         # Light augmentation, only active during training.
         # This is what keeps a small CNN from memorising the training set.
         layers.RandomFlip("horizontal"),
-        layers.RandomRotation(0.1),
-        layers.RandomZoom(0.1),
+        layers.RandomRotation(0.07),
+        layers.RandomZoom(0.07),
+        layers.RandomContrast(0.17),
 
-        layers.Conv2D(32, 3, padding="same", activation="relu"),
+        layers.Conv2D(40, 3, padding="same", activation="relu"),
         layers.BatchNormalization(),
         layers.MaxPooling2D(),
 
-        layers.Conv2D(64, 3, padding="same", activation="relu"),
+        layers.Conv2D(80, 3, padding="same", activation="relu"),
         layers.BatchNormalization(),
         layers.MaxPooling2D(),
 
-        layers.Conv2D(128, 3, padding="same", activation="relu"),
+        layers.Conv2D(160, 3, padding="same", activation="relu"),
         layers.BatchNormalization(),
         layers.MaxPooling2D(),
 
         # Pooling instead of Flatten keeps the dense head small
         layers.GlobalAveragePooling2D(),
-        layers.Dropout(0.3),
-        layers.Dense(128, activation="relu"),
-        layers.Dropout(0.3),
+        layers.Dropout(0.6),
+        layers.Dense(140, activation="relu"),
+        layers.Dropout(0.6),
 
         # 1 sigmoid output for 2 classes, softmax otherwise
         layers.Dense(
@@ -47,9 +48,9 @@ def build_model(input_shape, num_classes):
     ])
 
     model.compile(
-        optimizer=keras.optimizers.Adam(1e-3),
+        optimizer=keras.optimizers.Adam(learning_rate=4e-4),
         loss="binary_crossentropy" if num_classes == 2
-             else "sparse_categorical_crossentropy",
+             else "sparse_categorical_crossentropy",    
         metrics=["accuracy"],
     )
 
@@ -57,7 +58,7 @@ def build_model(input_shape, num_classes):
 
 
 def train_model(X_train, y_train, X_val, y_val, num_classes,
-                output_dir=None, epochs=30, batch_size=32):
+                output_dir=None, epochs=30, batch_size=40):
     """Build, train and save the model. Returns (model, history)."""
 
     model = build_model(X_train.shape[1:], num_classes)
