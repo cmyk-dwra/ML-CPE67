@@ -4,7 +4,7 @@ CNN image classifier for recognizing **Cheetahs vs Hyenas** using TensorFlow/Ker
 
 ## Structure
 
-m-project/
+`m-project/
 ├── train/
 │   ├── cheetah/
 │   └── hyena/
@@ -18,7 +18,7 @@ m-project/
 ├── split_data.py
 ├── evaluate.py
 └── test_cnn.py
-
+`
 ## Model
 
 - 3 convolutional blocks: `32 → 64 → 128` filters
