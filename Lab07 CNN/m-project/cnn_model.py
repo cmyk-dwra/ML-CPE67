@@ -18,9 +18,9 @@ def build_model(input_shape, num_classes):
         # Light augmentation, only active during training.
         # This is what keeps a small CNN from memorising the training set.
         layers.RandomFlip("horizontal"),
-        layers.RandomRotation(0.07),
-        layers.RandomZoom(0.07),
-        layers.RandomContrast(0.17),
+        layers.RandomRotation(0.05),
+        layers.RandomZoom(0.05),
+        layers.RandomContrast(0.2),
 
         layers.Conv2D(40, 3, padding="same", activation="relu"),
         layers.BatchNormalization(),
@@ -37,7 +37,7 @@ def build_model(input_shape, num_classes):
         # Pooling instead of Flatten keeps the dense head small
         layers.GlobalAveragePooling2D(),
         layers.Dropout(0.6),
-        layers.Dense(140, activation="relu"),
+        layers.Dense(160, activation="relu"),
         layers.Dropout(0.6),
 
         # 1 sigmoid output for 2 classes, softmax otherwise
@@ -70,7 +70,7 @@ def train_model(X_train, y_train, X_val, y_val, num_classes,
             monitor="val_loss", patience=5, restore_best_weights=True
         ),
         keras.callbacks.ReduceLROnPlateau(
-            monitor="val_loss", factor=0.5, patience=3, min_lr=1e-5
+            monitor="val_loss", factor=0.5, patience=4, min_lr=1e-5
         ),
     ]
 
