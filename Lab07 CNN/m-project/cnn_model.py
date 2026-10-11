@@ -15,10 +15,9 @@ def build_model(input_shape, num_classes):
         layers.Rescaling(1.0 / 255),
 
         layers.RandomFlip("horizontal_and_vertical"),
-        layers.RandomRotation(0.2),       
-        layers.RandomZoom(0.2),           
-        layers.RandomTranslation(0.1, 0.1), 
-        layers.RandomContrast(0.3),       
+        layers.RandomRotation(0.05),       
+        layers.RandomZoom(0.05),            
+        layers.RandomContrast(0.2),       
 
        
         layers.Conv2D(16, 3, padding="same", activation="relu", 
@@ -50,7 +49,7 @@ def build_model(input_shape, num_classes):
     ])
 
     model.compile(
-        optimizer=keras.optimizers.Adam(learning_rate=3e-4),
+        optimizer=keras.optimizers.Adam(learning_rate=1e-4),
         loss="binary_crossentropy" if num_classes == 2
              else "sparse_categorical_crossentropy",    
         metrics=["accuracy"],
@@ -60,7 +59,7 @@ def build_model(input_shape, num_classes):
 
 
 def train_model(X_train, y_train, X_val, y_val, num_classes,
-                output_dir=None, epochs=50, batch_size=32): # Smaller batch size for small datasets
+                output_dir=None, epochs=50, batch_size=32):
     """Build, train and save the model. Returns (model, history)."""
 
     model = build_model(X_train.shape[1:], num_classes)
@@ -69,7 +68,7 @@ def train_model(X_train, y_train, X_val, y_val, num_classes,
     callbacks = [
         # Strict patience: Stop immediately when validation loss climbs
         keras.callbacks.EarlyStopping(
-            monitor="val_loss", patience=3, restore_best_weights=True
+            monitor="val_loss", patience=5, restore_best_weights=True
         ),
         # Removed learning rate decay to prevent micro-overfitting
     ]

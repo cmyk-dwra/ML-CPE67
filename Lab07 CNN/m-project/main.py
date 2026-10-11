@@ -2,8 +2,6 @@ import json
 import os
 
 import numpy as np
-import tensorflow as tf
-tf.keras.utils.set_random_seed(42)
 
 from data_loader import load_data
 from preprocessing import to_features
@@ -18,7 +16,7 @@ OUTPUT_DIR = os.path.join(BASE_DIR, "outputs")
 
 IMG_SIZE = 100
 TEST_SIZE = 0.2
-VAL_SIZE = 0.2
+VAL_SIZE = 0.15
 MAX_PER_CLASS = 3000   # None = use all images
 EPOCHS = 50
 BATCH_SIZE = 32
