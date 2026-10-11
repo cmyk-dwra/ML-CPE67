@@ -11,34 +11,36 @@ def build_model(input_shape, num_classes):
     model = keras.Sequential([
         keras.Input(shape=input_shape),
 
-        # Normalize 0-255 to 0-1 inside the model, so inference code never
-        # has to remember to do it
+        
         layers.Rescaling(1.0 / 255),
 
-        # Light augmentation, only active during training.
-        # This is what keeps a small CNN from memorising the training set.
-        layers.RandomFlip("horizontal"),
-        layers.RandomRotation(0.05),
-        layers.RandomZoom(0.05),
-        layers.RandomContrast(0.2),
+        layers.RandomFlip("horizontal_and_vertical"),
+        layers.RandomRotation(0.2),       
+        layers.RandomZoom(0.2),           
+        layers.RandomTranslation(0.1, 0.1), 
+        layers.RandomContrast(0.3),       
 
-        layers.Conv2D(40, 3, padding="same", activation="relu"),
-        layers.BatchNormalization(),
+       
+        layers.Conv2D(16, 3, padding="same", activation="relu", 
+                      kernel_regularizer=keras.regularizers.l2(1e-3)),
         layers.MaxPooling2D(),
 
-        layers.Conv2D(80, 3, padding="same", activation="relu"),
-        layers.BatchNormalization(),
+        layers.Conv2D(32, 3, padding="same", activation="relu",
+                      kernel_regularizer=keras.regularizers.l2(1e-3)),
         layers.MaxPooling2D(),
 
-        layers.Conv2D(160, 3, padding="same", activation="relu"),
-        layers.BatchNormalization(),
+        layers.Conv2D(64, 3, padding="same", activation="relu",
+                      kernel_regularizer=keras.regularizers.l2(1e-3)),
         layers.MaxPooling2D(),
 
-        # Pooling instead of Flatten keeps the dense head small
+        # Pooling keeps the dense head small
         layers.GlobalAveragePooling2D(),
-        layers.Dropout(0.6),
-        layers.Dense(160, activation="relu"),
-        layers.Dropout(0.6),
+        layers.Dropout(0.5),
+        
+        # Reduced dense units from 128 to 64
+        layers.Dense(64, activation="relu", 
+                     kernel_regularizer=keras.regularizers.l2(1e-3)),
+        layers.Dropout(0.5),
 
         # 1 sigmoid output for 2 classes, softmax otherwise
         layers.Dense(
@@ -48,7 +50,7 @@ def build_model(input_shape, num_classes):
     ])
 
     model.compile(
-        optimizer=keras.optimizers.Adam(learning_rate=4e-4),
+        optimizer=keras.optimizers.Adam(learning_rate=3e-4),
         loss="binary_crossentropy" if num_classes == 2
              else "sparse_categorical_crossentropy",    
         metrics=["accuracy"],
@@ -58,20 +60,18 @@ def build_model(input_shape, num_classes):
 
 
 def train_model(X_train, y_train, X_val, y_val, num_classes,
-                output_dir=None, epochs=30, batch_size=40):
+                output_dir=None, epochs=50, batch_size=32): # Smaller batch size for small datasets
     """Build, train and save the model. Returns (model, history)."""
 
     model = build_model(X_train.shape[1:], num_classes)
     model.summary()
 
     callbacks = [
-        # Stop when validation loss stops improving, keep the best weights
+        # Strict patience: Stop immediately when validation loss climbs
         keras.callbacks.EarlyStopping(
-            monitor="val_loss", patience=5, restore_best_weights=True
+            monitor="val_loss", patience=3, restore_best_weights=True
         ),
-        keras.callbacks.ReduceLROnPlateau(
-            monitor="val_loss", factor=0.5, patience=4, min_lr=1e-5
-        ),
+        # Removed learning rate decay to prevent micro-overfitting
     ]
 
     print("\nTraining...")
@@ -95,7 +95,6 @@ def train_model(X_train, y_train, X_val, y_val, num_classes,
         print(f"Saved: {os.path.join(output_dir, 'cnn_model.keras')}")
 
     return model, history
-
 
 def predict_model(model, X_test):
 
