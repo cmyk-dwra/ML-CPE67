@@ -2,27 +2,33 @@ import json
 import os
 
 import numpy as np
+import tensorflow as tf
+tf.keras.utils.set_random_seed(55)
 
 from data_loader import load_data
 from preprocessing import to_features
 from split_data import split_dataset
-from vgg_model import train_model, predict_model, VGG16, VGG_SMALL
+from vgg_model import VGG_TINY, train_model, predict_model, VGG16, VGG_SMALL
 from evaluate import evaluate_model, plot_history
 
 # Paths are relative to this file, so the script runs from any directory
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-DATA_PATH = os.path.join(BASE_DIR, "..", "train")
+DATA_PATH = os.path.join(BASE_DIR, "..",  "train")
 OUTPUT_DIR = os.path.join(BASE_DIR, "outputs")
 
-IMG_SIZE = 50
-TEST_SIZE = 0.2
-VAL_SIZE = 0.1
+IMG_SIZE = 100
+TEST_SIZE = 0.15
+VAL_SIZE = 0.15
 MAX_PER_CLASS = 3000   # None = use all images
 EPOCHS = 50
-BATCH_SIZE = 32
+BATCH_SIZE = 64
 
 # VGG16 = full 13-conv layout. VGG_SMALL = lighter, for CPU training.
 BLOCKS = VGG_SMALL
+
+# True = real VGG16 with ImageNet weights (needs internet once).
+# False = VGG layout trained from scratch.
+USE_PRETRAINED = False
 
 
 def main():
@@ -78,7 +84,8 @@ def main():
 
     model, history = train_model(
         X_train, y_train, X_val, y_val, len(classes),
-        OUTPUT_DIR, EPOCHS, BATCH_SIZE, BLOCKS
+        OUTPUT_DIR, EPOCHS, BATCH_SIZE, BLOCKS,
+        pretrained=USE_PRETRAINED
     )
 
     print("Training completed.")
