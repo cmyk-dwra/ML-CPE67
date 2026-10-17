@@ -16,13 +16,13 @@ OUTPUT_DIR = os.path.join(BASE_DIR, "outputs")
 
 IMG_SIZE = 50
 TEST_SIZE = 0.2
-VAL_SIZE = 0.2
+VAL_SIZE = 0.1
 MAX_PER_CLASS = 3000   # None = use all images
-EPOCHS = 20
-BATCH_SIZE = 64
+EPOCHS = 50
+BATCH_SIZE = 32
 
 # VGG16 = full 13-conv layout. VGG_SMALL = lighter, for CPU training.
-BLOCKS = VGG16
+BLOCKS = VGG_SMALL
 
 
 def main():
